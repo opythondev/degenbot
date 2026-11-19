@@ -24,7 +24,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from degenbot import Bot, UniswapV2Pool
+from degenbot import Bot, CurveStableswapPool, UniswapV2Pool
 from degenbot.aerodrome.pools import AerodromeV2Pool
 from degenbot.arbitrage import ArbitrageEngine, RegistrationLifecycle
 from degenbot.logging import logger as bot_logger
@@ -333,6 +333,8 @@ class EngineRegistry:
             key = self.engine.pool_id_for_pool(_AERODROME_FAMILY, pool.address)
         elif isinstance(pool, UniswapV2Pool):
             key = self.engine.pool_id_for_pool(_V2_FAMILY, pool.address)
+        elif isinstance(pool, CurveStableswapPool):
+            key = self.engine.pool_id_for_pool("curve", pool.address)
         else:  # V3
             key = self.engine.pool_id_for_pool(_V3_FAMILY, pool.address)
         if key is None:
